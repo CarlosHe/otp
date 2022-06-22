@@ -1,0 +1,11 @@
+{
+	"name": "delphi-otp",
+	"description": "Time-based one-time password for Delphi",
+	"version": "1.0.0",
+	"homepage": "https://github.com/CarlosHe/otp",
+	"mainsrc": "./src/",
+	"projects": [],
+	"dependencies": {
+		"https://github.com/carloshe/codec-base32": "^1.0.2"
+	}
+}
