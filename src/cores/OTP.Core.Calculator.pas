@@ -13,7 +13,7 @@ type
     FSecret: string;
     FCounter: Int64;
     FKeyRegeneration: Integer;
-    FLength: Word;
+    FLength: Byte;
   protected
     { protected declarations }
     constructor Create;
@@ -22,7 +22,7 @@ type
     function SetKeyRegeneration(const AKeyRegeneration: Integer): IOTPCalculator;
     function SetSecret(const ASecret: string): IOTPCalculator;
     function SetCounter(const ACounter: Int64): IOTPCalculator;
-    function SetLength(const ALength: Word): IOTPCalculator;
+    function SetLength(const ALength: Byte): IOTPCalculator;
     function Calculate: UInt32;
     class function New: IOTPCalculator;
   end;
@@ -97,7 +97,7 @@ begin
   FKeyRegeneration := AKeyRegeneration;
 end;
 
-function TOTPCalculator.SetLength(const ALength: Word): IOTPCalculator;
+function TOTPCalculator.SetLength(const ALength: Byte): IOTPCalculator;
 begin
   Result := Self;
   FLength := ALength;
