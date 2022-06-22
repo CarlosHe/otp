@@ -13,6 +13,7 @@ type
     FSecret: string;
     FCounter: Int64;
     FKeyRegeneration: Integer;
+    FLength: Word;
   protected
     { protected declarations }
     constructor Create;
@@ -21,6 +22,7 @@ type
     function SetKeyRegeneration(const AKeyRegeneration: Integer): IOTPCalculator;
     function SetSecret(const ASecret: string): IOTPCalculator;
     function SetCounter(const ACounter: Int64): IOTPCalculator;
+    function SetLength(const ALength: Word): IOTPCalculator;
     function Calculate: UInt32;
     class function New: IOTPCalculator;
   end;
@@ -68,13 +70,14 @@ begin
 
   LKey := (LPart1 shl 24) OR (LPart2 shl 16) OR (LPart3 shl 8) OR (LPart4);
 
-  Result := LKey mod Trunc(IntPower(10, 6));
+  Result := LKey mod Trunc(IntPower(10, FLength));
 end;
 
 constructor TOTPCalculator.Create;
 begin
   FCounter := -1;
   FKeyRegeneration := KEY_REGENERATION;
+  FLength := OTP_LENGTH;
 end;
 
 class function TOTPCalculator.New: IOTPCalculator;
@@ -92,6 +95,12 @@ function TOTPCalculator.SetKeyRegeneration(const AKeyRegeneration: Integer): IOT
 begin
   Result := Self;
   FKeyRegeneration := AKeyRegeneration;
+end;
+
+function TOTPCalculator.SetLength(const ALength: Word): IOTPCalculator;
+begin
+  Result := Self;
+  FLength := ALength;
 end;
 
 function TOTPCalculator.SetSecret(const ASecret: string): IOTPCalculator;

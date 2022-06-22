@@ -9,6 +9,7 @@ type
     function SetKeyRegeneration(const AKeyRegeneration: Integer): IOTPCalculator;
     function SetSecret(const ASecret: string): IOTPCalculator;
     function SetCounter(const ACounter: Int64): IOTPCalculator;
+    function SetLength(const ALength: Word): IOTPCalculator;
     function Calculate: UInt32;
   end;
 
