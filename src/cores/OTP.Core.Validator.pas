@@ -50,7 +50,7 @@ begin
   FOTPCalculator.SetKeyRegeneration(FKeyRegeneration).SetCounter(LTime);
   for LTestValue := LTime - FWindowSize to LTime + FWindowSize do
   begin
-    if (FOTPCalculator.SetCounter(LTime).Calculate = FToken) then
+    if (FOTPCalculator.SetCounter(LTestValue).Calculate = FToken) then
     begin
       Result := True;
       Break;
