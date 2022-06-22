@@ -36,7 +36,7 @@ begin
 end.
 ```
 
-## ⚡️ Validating a token
+## ⚡️ Validate a token
 ```delphi
 uses
   OTP;
