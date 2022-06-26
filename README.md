@@ -1,6 +1,6 @@
 # Time-based one-time password
 
-This is a simple Delphi library that will generate TOTP tokens. The library fully conforms to RFCs 4226.
+A Delphi library for generating one-time passwords according to RFC 4226 (HOTP Algorithm) and RFC 6238 (TOTP Algorithm).
 
 ## ⚙️ Installation
 Installation is done using the [`boss install`](https://github.com/HashLoad/boss) command:
