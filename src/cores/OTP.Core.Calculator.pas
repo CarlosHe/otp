@@ -42,13 +42,16 @@ uses
 
 function TOTPCalculator.Calculate: UInt32;
 var
+  LCounter: Byte;
   LHash: TArray<Byte>;
-  LOffset: UInt8;
-  LParts: array [0 .. 3] of UInt8;
-  LKey: UInt32;
-  LTime: Int64;
   LTimeKey: TArray<Byte>;
   LBinSecret: TArray<Byte>;
+  LParts: array [0 .. 3] of UInt8;
+  LOffset: UInt8;
+  LKey: UInt32;
+  LTime: Int64;
+const
+  LPartDic: array [0 .. 3] of Byte = ($7F, $FF, $FF, $FF);
 begin
   LTime := DateTimeToUnix(Now(), False) div FKeyRegeneration;
 
@@ -60,12 +63,10 @@ begin
   LHash := THashSHA1.GetHMACAsBytes(LTimeKey, LBinSecret);
 
   LOffset := (LHash[19] AND $0F);
-  LParts[0] := (LHash[LOffset + 0] AND $7F);
-  LParts[1] := (LHash[LOffset + 1] AND $FF);
-  LParts[2] := (LHash[LOffset + 2] AND $FF);
-  LParts[3] := (LHash[LOffset + 3] AND $FF);
+  for LCounter := Low(LParts) to High(LParts) do
+    LParts[LCounter] := LHash[LOffset + LCounter] and LPartDic[LCounter];
 
-  LKey := (LParts[0] shl 24) OR (LParts[1] shl 16) OR (LParts[2] shl 8) OR (LParts[3]);
+  LKey := (LParts[0] shl 24) or (LParts[1] shl 16) or (LParts[2] shl 8) or (LParts[3]);
 
   Result := LKey mod Trunc(IntPower(10, FLength));
 end;
