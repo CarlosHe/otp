@@ -44,10 +44,7 @@ function TOTPCalculator.Calculate: UInt32;
 var
   LHash: TArray<Byte>;
   LOffset: UInt8;
-  LPart1: UInt8;
-  LPart2: UInt8;
-  LPart3: UInt8;
-  LPart4: UInt8;
+  LParts: array [0 .. 3] of UInt8;
   LKey: UInt32;
   LTime: Int64;
   LTimeKey: TArray<Byte>;
@@ -59,16 +56,16 @@ begin
     LTime := FCounter;
 
   LBinSecret := TBase32.Decode(TEncoding.UTF8.GetBytes(FSecret));
-  LTimeKey :=  LTimeKey.FromInt64(Int64(LTime)).Reverse;
+  LTimeKey := LTimeKey.FromInt64(Int64(LTime)).Reverse;
   LHash := THashSHA1.GetHMACAsBytes(LTimeKey, LBinSecret);
 
   LOffset := (LHash[19] AND $0F);
-  LPart1 := (LHash[LOffset+0] AND $7F);
-  LPart2 := (LHash[LOffset+1] AND $FF);
-  LPart3 := (LHash[LOffset+2] AND $FF);
-  LPart4 := (LHash[LOffset+3] AND $FF);
+  LParts[0] := (LHash[LOffset + 0] AND $7F);
+  LParts[1] := (LHash[LOffset + 1] AND $FF);
+  LParts[2] := (LHash[LOffset + 2] AND $FF);
+  LParts[3] := (LHash[LOffset + 3] AND $FF);
 
-  LKey := (LPart1 shl 24) OR (LPart2 shl 16) OR (LPart3 shl 8) OR (LPart4);
+  LKey := (LParts[0] shl 24) OR (LParts[1] shl 16) OR (LParts[2] shl 8) OR (LParts[3]);
 
   Result := LKey mod Trunc(IntPower(10, FLength));
 end;
